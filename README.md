@@ -128,15 +128,15 @@ Parameter Utama:
 - random_state=42: Menjamin bahwa pembagian data dan hasil training bersifat konsisten setiap kali kode dijalankan.
 
 Kelebihan:
-✅ Sederhana dan cepat – Mudah diimplementasikan dan membutuhkan sedikit waktu untuk pelatihan.
-✅ Interpretable – Koefisien model dapat diinterpretasikan untuk memahami hubungan antara variabel.
-✅ Generalizable – Cenderung tidak overfitting jika data tidak terlalu kompleks.
-✅ Bekerja baik pada dataset yang seimbang – Efektif jika distribusi kelas tidak terlalu timpang.
+- ✅ Sederhana dan cepat – Mudah diimplementasikan dan membutuhkan sedikit waktu untuk pelatihan.
+- ✅ Interpretable – Koefisien model dapat diinterpretasikan untuk memahami hubungan antara variabel.
+- ✅ Generalizable – Cenderung tidak overfitting jika data tidak terlalu kompleks.
+- ✅ Bekerja baik pada dataset yang seimbang – Efektif jika distribusi kelas tidak terlalu timpang.
 
 Kekurangan:
-❌ Tidak bisa menangani hubungan non-linear – Performa buruk jika hubungan antara variabel independen dan target bersifat non-linear.
-❌ Mudah dipengaruhi oleh outlier – Data yang memiliki outlier besar dapat menyebabkan hasil yang tidak akurat.
-❌ Kurang efektif pada dataset besar dengan banyak fitur – Bisa mengalami kesulitan dalam menemukan pola jika dataset sangat kompleks.
+- ❌ Tidak bisa menangani hubungan non-linear – Performa buruk jika hubungan antara variabel independen dan target bersifat non-linear.
+- ❌ Mudah dipengaruhi oleh outlier – Data yang memiliki outlier besar dapat menyebabkan hasil yang tidak akurat.
+- ❌ Kurang efektif pada dataset besar dengan banyak fitur – Bisa mengalami kesulitan dalam menemukan pola jika dataset sangat kompleks.
 
 **- Random Forest Classifier:**
 Tahapan:
@@ -147,34 +147,34 @@ Parameter Utama:
 - random_state=42: Menjaga konsistensi hasil pada setiap run.
 
 Kelebihan:
-✅ Lebih akurat dibanding Decision Tree tunggal – Menggunakan banyak pohon untuk mengurangi overfitting.
-✅ Dapat menangani dataset besar dengan banyak fitur – Skalabilitas lebih baik dibanding Decision Tree dan Logistic Regression.
-✅ Mampu menangani outlier dan missing values – Tidak terlalu terpengaruh oleh anomali dalam dataset.
-✅ Cocok untuk data non-linear – Karena merupakan ensemble dari banyak pohon, model ini bisa menangkap pola yang kompleks.
+- ✅ Lebih akurat dibanding Decision Tree tunggal – Menggunakan banyak pohon untuk mengurangi overfitting.
+- ✅ Dapat menangani dataset besar dengan banyak fitur – Skalabilitas lebih baik dibanding Decision Tree dan Logistic Regression.
+- ✅ Mampu menangani outlier dan missing values – Tidak terlalu terpengaruh oleh anomali dalam dataset.
+- ✅ Cocok untuk data non-linear – Karena merupakan ensemble dari banyak pohon, model ini bisa menangkap pola yang kompleks.
 
 Kekurangan:
-❌ Lebih lambat dibanding Decision Tree dan Logistic Regression – Karena terdiri dari banyak pohon, pelatihan dan inferensi lebih lambat.
-❌ Kurang interpretatif – Tidak semudah Logistic Regression atau Decision Tree dalam memahami hubungan antar variabel.
-❌ Menggunakan lebih banyak sumber daya komputasi – Membutuhkan lebih banyak memori dan waktu untuk pelatihan.
+- ❌ Lebih lambat dibanding Decision Tree dan Logistic Regression – Karena terdiri dari banyak pohon, pelatihan dan inferensi lebih lambat.
+- ❌ Kurang interpretatif – Tidak semudah Logistic Regression atau Decision Tree dalam memahami hubungan antar variabel.
+- ❌ Menggunakan lebih banyak sumber daya komputasi – Membutuhkan lebih banyak memori dan waktu untuk pelatihan.
 
 **- Decision Tree:**
 Tahapan:
 Inisialisasi Model: Model Decision Tree diinisialisasi dengan parameter max_depth=5 untuk membatasi kedalaman pohon, serta random_state=42 untuk memastikan konsistensi.
 
 Parameter Utama:
-= max_depth=5: Membatasi kedalaman pohon agar tidak terlalu rumit, yang membantu mengurangi risiko overfitting.
+- max_depth=5: Membatasi kedalaman pohon agar tidak terlalu rumit, yang membantu mengurangi risiko overfitting.
 - random_state=42
   
 Kelebihan:
-✅ Mudah dipahami dan diinterpretasikan – Bisa divisualisasikan dalam bentuk pohon keputusan.
-✅ Dapat menangani data non-linear – Tidak seperti Logistic Regression, Decision Tree dapat menemukan pola kompleks dalam dataset.
-✅ Tidak memerlukan banyak preprocessing – Tidak perlu normalisasi atau transformasi skala data.
-✅ Dapat menangani data dengan missing values – Tidak terlalu bergantung pada keberadaan semua fitur dalam setiap sample.
+=✅ Mudah dipahami dan diinterpretasikan – Bisa divisualisasikan dalam bentuk pohon keputusan.
+- ✅ Dapat menangani data non-linear – Tidak seperti Logistic Regression, Decision Tree dapat menemukan pola kompleks dalam dataset.
+- ✅ Tidak memerlukan banyak preprocessing – Tidak perlu normalisasi atau transformasi skala data.
+- ✅ Dapat menangani data dengan missing values – Tidak terlalu bergantung pada keberadaan semua fitur dalam setiap sample.
 
 Kekurangan:
-❌ Cenderung overfitting – Jika tidak di-pruning, model bisa terlalu menyesuaikan dengan data pelatihan.
-❌ Kurang stabil – Perubahan kecil pada data dapat menyebabkan perubahan besar dalam struktur pohon.
-❌ Kurang efisien pada dataset besar – Waktu komputasi meningkat seiring bertambahnya ukuran dataset dan jumlah fitur.
+- ❌ Cenderung overfitting – Jika tidak di-pruning, model bisa terlalu menyesuaikan dengan data pelatihan.
+- ❌ Kurang stabil – Perubahan kecil pada data dapat menyebabkan perubahan besar dalam struktur pohon.
+- ❌ Kurang efisien pada dataset besar – Waktu komputasi meningkat seiring bertambahnya ukuran dataset dan jumlah fitur.
 
 # F. Model Evaluation 
 
@@ -200,12 +200,3 @@ Keunggulan Tree-Based Models:
 
 Pemilihan Model Terbaik:
 Berdasarkan metrik evaluasi, RandomForestClassifier dipilih sebagai model terbaik karena performanya yang 100% dan kemampuannya yang lebih robust untuk generalisasi.
-
-
-# F. Validasi Model
-Kode juga melakukan validasi dengan:
-
-- Evaluasi pada Data Testing: Menggunakan hold-out test set untuk mengevaluasi setiap model.
-- Stratified K-Fold Cross-Validation: Memberikan rata-rata dan standar deviasi metrik f1_macro untuk memastikan model bekerja konsisten di seluruh subset data training.
-
-Hasil cross-validation menunjukkan performa yang sangat tinggi untuk model tree-based (Random Forest dan Decision Tree) baik pada data oversampled maupun undersampled.
