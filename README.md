@@ -119,7 +119,7 @@ Menggunakan SMOTE untuk oversampling kelas minoritas dan juga Random Undersample
 
 Tiga algoritma digunakan:
 
-**- Logistic Regression:**
+**Logistic Regression:**
 Tahapan:
 Inisialisasi Model: Model Logistic Regression diinisialisasi dengan parameter max_iter=1000 untuk memastikan konvergensi, dan random_state=42 agar hasil bisa direproduksi.
 
@@ -138,7 +138,7 @@ Kekurangan:
 - ❌ Mudah dipengaruhi oleh outlier – Data yang memiliki outlier besar dapat menyebabkan hasil yang tidak akurat.
 - ❌ Kurang efektif pada dataset besar dengan banyak fitur – Bisa mengalami kesulitan dalam menemukan pola jika dataset sangat kompleks.
 
-**- Random Forest Classifier:**
+**Random Forest Classifier:**
 Tahapan:
 Inisialisasi Model: Model Random Forest diinisialisasi dengan parameter n_estimators=100 (membangun 100 pohon) dan random_state=42 untuk reproduksibilitas.
 
@@ -157,7 +157,7 @@ Kekurangan:
 - ❌ Kurang interpretatif – Tidak semudah Logistic Regression atau Decision Tree dalam memahami hubungan antar variabel.
 - ❌ Menggunakan lebih banyak sumber daya komputasi – Membutuhkan lebih banyak memori dan waktu untuk pelatihan.
 
-**- Decision Tree:**
+**Decision Tree:**
 Tahapan:
 Inisialisasi Model: Model Decision Tree diinisialisasi dengan parameter max_depth=5 untuk membatasi kedalaman pohon, serta random_state=42 untuk memastikan konsistensi.
 
@@ -166,7 +166,7 @@ Parameter Utama:
 - random_state=42
   
 Kelebihan:
-=✅ Mudah dipahami dan diinterpretasikan – Bisa divisualisasikan dalam bentuk pohon keputusan.
+- ✅ Mudah dipahami dan diinterpretasikan – Bisa divisualisasikan dalam bentuk pohon keputusan.
 - ✅ Dapat menangani data non-linear – Tidak seperti Logistic Regression, Decision Tree dapat menemukan pola kompleks dalam dataset.
 - ✅ Tidak memerlukan banyak preprocessing – Tidak perlu normalisasi atau transformasi skala data.
 - ✅ Dapat menangani data dengan missing values – Tidak terlalu bergantung pada keberadaan semua fitur dalam setiap sample.
