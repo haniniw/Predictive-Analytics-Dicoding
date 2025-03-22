@@ -16,7 +16,7 @@ Dalam industri e-commerce, pembatalan transaksi merupakan masalah yang signifika
 **Problem Statement:**
 
 Bagaimana membangun model prediktif untuk mengidentifikasi transaksi yang berisiko tinggi dibatalkan?
-
+Model apa yang memiliki akurasi paling baik dalam memprediksi pembatalan transaksi?
 **Goals:**
 
 - Membuat model machine learning yang dapat memprediksi pembatalan transaksi.
