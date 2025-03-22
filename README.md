@@ -17,6 +17,7 @@ Dalam industri e-commerce, pembatalan transaksi merupakan masalah yang signifika
 
 Bagaimana membangun model prediktif untuk mengidentifikasi transaksi yang berisiko tinggi dibatalkan?
 Model apa yang memiliki akurasi paling baik dalam memprediksi pembatalan transaksi?
+
 **Goals:**
 
 - Membuat model machine learning yang dapat memprediksi pembatalan transaksi.
@@ -114,30 +115,92 @@ Data dibagi menjadi training dan testing set dengan stratifikasi pada variabel t
 **9. Handling Imbalanced Data:**
 Menggunakan SMOTE untuk oversampling kelas minoritas dan juga Random Undersampler untuk perbandingan.
 
-# E. Model Development & Evaluation
+# E. Model Development 
 
-**- Modeling:**
-Tiga algoritma utama digunakan:
+Tiga algoritma digunakan:
 
-- Logistic Regression:
-Terlihat gagal mendeteksi transaksi dibatalkan, karena semua prediksi model adalah kelas tidak dibatalkan.
-- Random Forest Classifier & Decision Tree Classifier (setelah SMOTE):
-Kedua model ini menunjukkan performa sempurna pada data testing (100% akurasi, precision, recall, dan f1-score untuk kedua kelas).
-- Random Forest dengan Undersampling:
-Juga menunjukkan hasil yang sempurna setelah dilakukan undersampling.
+**- Logistic Regression:**
+Tahapan:
+Inisialisasi Model: Model Logistic Regression diinisialisasi dengan parameter max_iter=1000 untuk memastikan konvergensi, dan random_state=42 agar hasil bisa direproduksi.
 
-**- Evaluasi Model:**
-Evaluasi dilakukan dengan:
+Parameter Utama:
+- max_iter=1000: Menetapkan jumlah iterasi maksimum untuk mencapai konvergensi.
+- random_state=42: Menjamin bahwa pembagian data dan hasil training bersifat konsisten setiap kali kode dijalankan.
 
-- Classification Report dan Confusion Matrix: Menilai metrik seperti precision, recall, f1-score, dan akurasi.
-- ROC Curve dan ROC-AUC: Menggunakan fungsi roc_curve dan roc_auc_score untuk mengukur kemampuan model membedakan kelas.
-- Cross-Validation dengan StratifiedKFold: Menggunakan cross_val_score dengan metrik f1_macro untuk memastikan performa model konsisten dan tidak overfit.
+Kelebihan:
+✅ Sederhana dan cepat – Mudah diimplementasikan dan membutuhkan sedikit waktu untuk pelatihan.
+✅ Interpretable – Koefisien model dapat diinterpretasikan untuk memahami hubungan antara variabel.
+✅ Generalizable – Cenderung tidak overfitting jika data tidak terlalu kompleks.
+✅ Bekerja baik pada dataset yang seimbang – Efektif jika distribusi kelas tidak terlalu timpang.
+
+Kekurangan:
+❌ Tidak bisa menangani hubungan non-linear – Performa buruk jika hubungan antara variabel independen dan target bersifat non-linear.
+❌ Mudah dipengaruhi oleh outlier – Data yang memiliki outlier besar dapat menyebabkan hasil yang tidak akurat.
+❌ Kurang efektif pada dataset besar dengan banyak fitur – Bisa mengalami kesulitan dalam menemukan pola jika dataset sangat kompleks.
+
+**- Random Forest Classifier:**
+Tahapan:
+Inisialisasi Model: Model Random Forest diinisialisasi dengan parameter n_estimators=100 (membangun 100 pohon) dan random_state=42 untuk reproduksibilitas.
+
+Parameter Utama:
+- n_estimators=100: Menentukan jumlah pohon dalam ensemble, yang membantu mengurangi varians dan meningkatkan generalisasi.
+- random_state=42: Menjaga konsistensi hasil pada setiap run.
+
+Kelebihan:
+✅ Lebih akurat dibanding Decision Tree tunggal – Menggunakan banyak pohon untuk mengurangi overfitting.
+✅ Dapat menangani dataset besar dengan banyak fitur – Skalabilitas lebih baik dibanding Decision Tree dan Logistic Regression.
+✅ Mampu menangani outlier dan missing values – Tidak terlalu terpengaruh oleh anomali dalam dataset.
+✅ Cocok untuk data non-linear – Karena merupakan ensemble dari banyak pohon, model ini bisa menangkap pola yang kompleks.
+
+Kekurangan:
+❌ Lebih lambat dibanding Decision Tree dan Logistic Regression – Karena terdiri dari banyak pohon, pelatihan dan inferensi lebih lambat.
+❌ Kurang interpretatif – Tidak semudah Logistic Regression atau Decision Tree dalam memahami hubungan antar variabel.
+❌ Menggunakan lebih banyak sumber daya komputasi – Membutuhkan lebih banyak memori dan waktu untuk pelatihan.
+
+**- Decision Tree:**
+Tahapan:
+Inisialisasi Model: Model Decision Tree diinisialisasi dengan parameter max_depth=5 untuk membatasi kedalaman pohon, serta random_state=42 untuk memastikan konsistensi.
+
+Parameter Utama:
+= max_depth=5: Membatasi kedalaman pohon agar tidak terlalu rumit, yang membantu mengurangi risiko overfitting.
+- random_state=42
   
-Hasilnya:
-Ketiga model yang digunaka efektif dalam menyelesaikan problem statement prediksi pembatalan transaksi pada dataset ini.
+Kelebihan:
+✅ Mudah dipahami dan diinterpretasikan – Bisa divisualisasikan dalam bentuk pohon keputusan.
+✅ Dapat menangani data non-linear – Tidak seperti Logistic Regression, Decision Tree dapat menemukan pola kompleks dalam dataset.
+✅ Tidak memerlukan banyak preprocessing – Tidak perlu normalisasi atau transformasi skala data.
+✅ Dapat menangani data dengan missing values – Tidak terlalu bergantung pada keberadaan semua fitur dalam setiap sample.
 
-![image](https://github.com/user-attachments/assets/b426d168-fdd1-4496-8a5f-2fd1736dd31e)
-![image](https://github.com/user-attachments/assets/e54260ac-1efd-41d0-9de1-f06337c7a69b)
+Kekurangan:
+❌ Cenderung overfitting – Jika tidak di-pruning, model bisa terlalu menyesuaikan dengan data pelatihan.
+❌ Kurang stabil – Perubahan kecil pada data dapat menyebabkan perubahan besar dalam struktur pohon.
+❌ Kurang efisien pada dataset besar – Waktu komputasi meningkat seiring bertambahnya ukuran dataset dan jumlah fitur.
+
+# F. Model Evaluation 
+
+model.predict(X):
+Deskripsi:
+Metode ini digunakan untuk menghasilkan prediksi dari model yang telah dilatih berdasarkan input data X.
+Fungsi:
+Menghasilkan array prediksi (label) untuk setiap sampel di X, sehingga kita dapat membandingkan hasil prediksi dengan label asli.
+
+accuracy_score(y_true, y_pred):
+Deskripsi:
+Fungsi ini berasal dari modul sklearn.metrics dan digunakan untuk menghitung akurasi, yaitu rasio jumlah prediksi yang benar dibandingkan dengan jumlah total sampel.
+Fungsi:
+Menyediakan metrik evaluasi sederhana yang mengukur berapa persen prediksi model sesuai dengan label sebenarnya.
+
+![image](https://github.com/user-attachments/assets/4b251182-40b2-47bc-8bd7-44fe00ec53b2)
+
+RandomForestClassifier dan DecisionTreeClassifier menunjukkan performa sempurna (100% akurasi) pada kedua data training dan testing, sedangkan LogisticRegression memiliki akurasi yang sedikit lebih rendah (98.52%).
+
+Keunggulan Tree-Based Models:
+- Random Forest dan Decision Tree mampu menangkap hubungan non-linear dan interaksi fitur secara lebih baik.
+- Random Forest, sebagai ensembel dari banyak pohon, biasanya lebih stabil dan kurang rentan overfitting dibandingkan satu pohon Decision Tree.
+
+Pemilihan Model Terbaik:
+Berdasarkan metrik evaluasi, RandomForestClassifier dipilih sebagai model terbaik karena performanya yang 100% dan kemampuannya yang lebih robust untuk generalisasi.
+
 
 # F. Validasi Model
 Kode juga melakukan validasi dengan:
