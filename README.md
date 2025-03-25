@@ -88,6 +88,7 @@ Analisis Multivariate:
 
 - Heatmap Korelasi antar Fitur Numerik
 ![image](https://github.com/user-attachments/assets/7792b19b-4b06-4a2b-b8e3-17d57c995e70)
+
 Quantity memiliki pengaruh dominan terhadap Revenue (korelasi tinggi, 0.98), sementara Price hanya memiliki hubungan linear yang sangat lemah terhadap Revenue (−0.075).
 
 Price dan Quantity juga berkorelasi negatif lemah (
