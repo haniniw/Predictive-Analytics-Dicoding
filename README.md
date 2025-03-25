@@ -112,9 +112,6 @@ Menggunakan StandardScaler untuk menstandarisasi fitur numerik agar memiliki ska
 **8.  Splitting Data:**
 Data dibagi menjadi training dan testing set dengan stratifikasi pada variabel target.
 
-**9. Handling Imbalanced Data:**
-Menggunakan SMOTE untuk oversampling kelas minoritas dan juga Random Undersampler untuk perbandingan.
-
 # E. Model Development 
 
 Tiga algoritma digunakan:
