@@ -25,7 +25,7 @@ Dalam dunia e-commerce, menjaga pendapatan harian itu sangat penting. Pendapatan
 
 **Solution Statement**
 
-Untuk meramalkan total pendapatan harian (daily revenue) dari transaksi e-commerce, saya menggunakan tiga pendekatan solusi, masing-masing dengan metrik evaluasi terukur (seperti MAE, RMSE, dan MAPE) sehingga solusi yang dihasilkan dapat dinilai secara objektif.
+Untuk meramalkan total pendapatan harian (daily revenue) dari transaksi e-commerce, saya menggunakan tiga pendekatan solusi, masing-masing dengan metrik evaluasi terukur (seperti MAE dan RMSE) sehingga solusi yang dihasilkan dapat dinilai secara objektif.
 
 - Menggunakan model ARIMA untuk memodelkan data time series secara univariat. ARIMA memanfaatkan pola historis revenue untuk menangkap tren dan musiman secara langsung melalui parameter (p, d, q). ARIMA memberikan model time series klasik yang mengandalkan pola historis secara langsung.
 
@@ -85,6 +85,13 @@ Analisis Multivariate:
 - Pairplot mengilustrasikan bahwa sebagian besar transaksi normal memiliki Quantity positif, sementara transaksi yang dibatalkan ditandai dengan Quantity negatif.
 
 ![image](https://github.com/user-attachments/assets/a187e8ac-e682-48da-bdf7-d2cc461f9578)
+
+- Heatmap Korelasi antar Fitur Numerik
+![image](https://github.com/user-attachments/assets/7792b19b-4b06-4a2b-b8e3-17d57c995e70)
+Quantity memiliki pengaruh dominan terhadap Revenue (korelasi tinggi, 0.98), sementara Price hanya memiliki hubungan linear yang sangat lemah terhadap Revenue (−0.075).
+
+Price dan Quantity juga berkorelasi negatif lemah (
+− 0.21 0.21), artinya ketika Price naik, Quantity mungkin sedikit turun, tetapi tidak terlalu signifikan.
 
 # D. Data Preparation
 
