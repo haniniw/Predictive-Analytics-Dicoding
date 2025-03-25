@@ -11,26 +11,27 @@ Melihat kondisi tersebut, penting untuk mengidentifikasi faktor-faktor yang memp
 
 # B. Business Understanding
 
-Dalam industri e-commerce, pembatalan transaksi merupakan masalah yang signifikan. Transaksi yang dibatalkan—diidentifikasi melalui penanda "C" pada kolom TransactionNo—dapat mengganggu alur operasional, menyebabkan kerugian finansial, dan menurunkan kepuasan pelanggan. Seringkali, pembatalan terjadi karena kondisi stok yang tidak memadai, di mana pelanggan memilih untuk membatalkan transaksi jika tidak semua produk dapat dikirim sekaligus.
+Dalam dunia e-commerce, menjaga pendapatan harian itu sangat penting. Pendapatan harian yang fluktuatif dapat membuat perusahaan kesulitan dalam mengelola stok, mengatur promosi, dan merencanakan operasional. Jika perusahaan dapat mengetahui kapan pendapatan cenderung turun atau naik, mereka bisa lebih cepat merespons—misalnya, dengan menambah stok atau menyesuaikan promosi—sehingga kerugian dapat diminimalkan dan kesempatan penjualan dapat dimaksimalkan.
 
 **Problem Statement:**
 
-- Bagaimana membangun model prediktif untuk mengidentifikasi transaksi yang berisiko tinggi dibatalkan?
-- Model apa yang memiliki akurasi paling baik dalam memprediksi pembatalan transaksi?
+- Bagaimana membangun model prediktif berbasis time series untuk meramalkan total pendapatan harian (daily revenue) dari transaksi e-commerce?
+- Model yang seperti apa yang memiliki akurasi paling baik?
 
 **Goals:**
 
-- Membuat model machine learning yang dapat memprediksi pembatalan transaksi.
-- Membandingkan beberapa algoritma model untuk menemukan akurasi terbaik dalam memprediksi pembatalan transaksi.
+- Mengembangkan model forecasting yang dapat memprediksi pendapatan penjualan harian dengan akurasi yang terukur menggunakan metrik Mean Absolute Error (MAE) dan Root Mean Squared Error (RMSE).
+- Membandingkan beberapa algoritma model untuk menemukan akurasi terbaik dalam memprediksi pendapatan penjualan harian.
 
 **Solution Statement**
 
-Pendekatan dengan Algoritma Linear (Logistic Regression):
-Diharapkan memberikan interpretasi yang mudah dan insight tentang pengaruh tiap fitur.
-Namun, solusi ini mungkin kurang efektif dalam menangkap pola non-linear.
-Pendekatan dengan Algoritma Non-Linear (Random Forest dan Decision Tree):
-Mampu menangkap hubungan non-linear dan interaksi antar fitur dengan lebih baik.
-Diharapkan menghasilkan performa prediksi yang lebih tinggi.
+Untuk meramalkan total pendapatan harian (daily revenue) dari transaksi e-commerce, saya menggunakan tiga pendekatan solusi, masing-masing dengan metrik evaluasi terukur (seperti MAE, RMSE, dan MAPE) sehingga solusi yang dihasilkan dapat dinilai secara objektif.
+
+- Menggunakan model ARIMA untuk memodelkan data time series secara univariat. ARIMA memanfaatkan pola historis revenue untuk menangkap tren dan musiman secara langsung melalui parameter (p, d, q). ARIMA memberikan model time series klasik yang mengandalkan pola historis secara langsung.
+
+- Menggunakan Random Forest Regressor untuk forecasting revenue harian dengan memanfaatkan fitur-fitur hasil rekayasa (lag revenue, moving averages, dll.). Pendekatan ini memungkinkan model menangkap hubungan non-linear dan interaksi antar fitur yang mungkin tidak dapat ditangkap oleh model time series tradisional.
+
+- Mengembangkan model deep learning berbasis LSTM yang dirancang untuk menangkap ketergantungan jangka panjang dalam data time series. Pendekatan ini efektif jika pola revenue harian memiliki dinamika non-linear yang kompleks.
 
 # C. Data Understanding
 
@@ -87,113 +88,132 @@ Analisis Multivariate:
 
 # D. Data Preparation
 
-**1. Pembersihan Data:**
-Menghapus duplikasi dan baris dengan missing value.
+**1. Membuat Label Pembatalan dan Revenue**
+Dibuat kolom IsCancelled untuk menandai apakah transaksi dibatalkan (jika TransactionNo mengandung 'C' atau jika Quantity < 0).
 
-**2. Konversi Tipe Data:**
-Kolom Date dikonversi menjadi datetime, CustomerNo dan TransactionNo diubah menjadi string.
+Kolom Revenue dihitung sebagai hasil perkalian Price dan Quantity untuk transaksi yang tidak dibatalkan, sedangkan untuk transaksi yang dibatalkan revenue diset menjadi 0..
 
-**3. Penanganan Outlier:**
-Outlier di Price dan Quantity diidentifikasi menggunakan metode IQR dan kemudian baris yang dianggap outlier dihapus.
+**2. Mengambil Hanya Transaksi yang Berhasil (non-cancelled)**
+Untuk forecasting revenue, kita hanya akumulasi transaksi yang tidak dibatalkan. Disimpan dalam df_sucess
 
-**4. Pembuatan Label:**
-Membuat kolom IsCancelled dengan menetapkan True jika TransactionNo mengandung "C" atau Quantity < 0.
+**3. Agregasi Revenue Harian**
+Data kemudian dikelompokkan berdasarkan tanggal untuk mendapatkan total pendapatan harian.
 
-**5. Ekstraksi Fitur:**
-Dari kolom Date, diekstraksi fitur Month, Day, dan Weekday.
-Ditambahkan fitur tambahan seperti HighPrice (produk dengan harga di atas median).
+**4. Pembuatan Fitur Time Series**
+Dibuat fitur lag (misalnya, Lag1, Lag7, Lag30) yang menunjukkan pendapatan hari sebelumnya sebagai input untuk model.
 
-**6. Encoding Variabel Kategorik:**
-Kolom-kolom dengan nilai unik tinggi (ProductName, CustomerNo, ProductNo, Country) di-encode menggunakan frequency encoding. Setelah itu, kolom asli dihapus untuk menghindari high dimensionality.
+Dibuat juga fitur moving average (MA7, MA30) untuk menangkap pola tren jangka pendek dan panjang.
 
-**7. Scaling Fitur Numerik:**
-Menggunakan StandardScaler untuk menstandarisasi fitur numerik agar memiliki skala seragam.
+**5. Scaling Fitur Numerik**
+Fitur-fitur numerik seperti Revenue, lag, dan moving average di-scale menggunakan StandardScaler agar memiliki rentang nilai yang seragam dan memudahkan proses training model.
 
-**8.  Splitting Data:**
-Data dibagi menjadi training dan testing set dengan stratifikasi pada variabel target.
+**6. Split Data Menjadi Training dan Testing Set**
+Data time series dibagi secara kronologis (tanpa pengacakan) ke dalam data training dan testing (misalnya, 80% training dan 20% testing) untuk menjaga urutan waktu.
 
 # E. Model Development 
 
 Tiga algoritma digunakan:
 
-**Logistic Regression:**
-Tahapan:
-Inisialisasi Model: Model Logistic Regression diinisialisasi dengan parameter max_iter=1000 untuk memastikan konvergensi, dan random_state=42 agar hasil bisa direproduksi.
-
-Parameter Utama:
-- max_iter=1000: Menetapkan jumlah iterasi maksimum untuk mencapai konvergensi.
-- random_state=42: Menjamin bahwa pembagian data dan hasil training bersifat konsisten setiap kali kode dijalankan.
-
-Kelebihan:
-- ✅ Sederhana dan cepat – Mudah diimplementasikan dan membutuhkan sedikit waktu untuk pelatihan.
-- ✅ Interpretable – Koefisien model dapat diinterpretasikan untuk memahami hubungan antara variabel.
-- ✅ Generalizable – Cenderung tidak overfitting jika data tidak terlalu kompleks.
-- ✅ Bekerja baik pada dataset yang seimbang – Efektif jika distribusi kelas tidak terlalu timpang.
-
-Kekurangan:
-- ❌ Tidak bisa menangani hubungan non-linear – Performa buruk jika hubungan antara variabel independen dan target bersifat non-linear.
-- ❌ Mudah dipengaruhi oleh outlier – Data yang memiliki outlier besar dapat menyebabkan hasil yang tidak akurat.
-- ❌ Kurang efektif pada dataset besar dengan banyak fitur – Bisa mengalami kesulitan dalam menemukan pola jika dataset sangat kompleks.
-
-**Random Forest Classifier:**
-Tahapan:
-Inisialisasi Model: Model Random Forest diinisialisasi dengan parameter n_estimators=100 (membangun 100 pohon) dan random_state=42 untuk reproduksibilitas.
-
-Parameter Utama:
-- n_estimators=100: Menentukan jumlah pohon dalam ensemble, yang membantu mengurangi varians dan meningkatkan generalisasi.
-- random_state=42: Menjaga konsistensi hasil pada setiap run.
+**1. Random Forest Regressor**
+Tahapan Pemodelan:
+- Fitur tambahan seperti lag dan moving average telah dibuat untuk menangkap pola temporal.
+- Splitting Data: Data di-split secara kronologis ke dalam training dan testing set.
+- Training Model: Model Random Forest Regressor di-fit pada data training dengan fitur-fitur yang sudah di-scale.
+- Prediksi dan Evaluasi: Model digunakan untuk memprediksi revenue pada data training dan testing, kemudian dievaluasi menggunakan metrik seperti MAE, RMSE, dan R².
+- Parameter Utama:
+n_estimators: Jumlah pohon dalam ensemble (misalnya, 100).
+max_depth: Kedalaman maksimum masing-masing pohon (misalnya, 10) untuk mengurangi kompleksitas dan overfitting.
+random_state: Untuk memastikan reproducibility hasil.
 
 Kelebihan:
-- ✅ Lebih akurat dibanding Decision Tree tunggal – Menggunakan banyak pohon untuk mengurangi overfitting.
-- ✅ Dapat menangani dataset besar dengan banyak fitur – Skalabilitas lebih baik dibanding Decision Tree dan Logistic Regression.
-- ✅ Mampu menangani outlier dan missing values – Tidak terlalu terpengaruh oleh anomali dalam dataset.
-- ✅ Cocok untuk data non-linear – Karena merupakan ensemble dari banyak pohon, model ini bisa menangkap pola yang kompleks.
+- Mampu menangkap hubungan non-linear dan interaksi antar fitur dengan sangat baik.
+- Lebih robust terhadap noise dan overfitting karena menggunakan banyak pohon (ensembling).
+- Dapat memanfaatkan fitur rekayasa seperti lag dan moving average sehingga memperkaya informasi.
 
 Kekurangan:
-- ❌ Lebih lambat dibanding Decision Tree dan Logistic Regression – Karena terdiri dari banyak pohon, pelatihan dan inferensi lebih lambat.
-- ❌ Kurang interpretatif – Tidak semudah Logistic Regression atau Decision Tree dalam memahami hubungan antar variabel.
-- ❌ Menggunakan lebih banyak sumber daya komputasi – Membutuhkan lebih banyak memori dan waktu untuk pelatihan.
+- Memerlukan sumber daya komputasi lebih banyak, sehingga training bisa lebih lambat.
+- Interpretasi internal model kurang transparan karena merupakan ensemble dari banyak pohon.
+- Jika parameter tidak di-tuning dengan baik, bisa tetap overfit pada data training.
+  ![image](https://github.com/user-attachments/assets/16fa79c8-511c-45b9-b3d2-e3527ccf8a59)
 
-**Decision Tree:**
-Tahapan:
-Inisialisasi Model: Model Decision Tree diinisialisasi dengan parameter max_depth=5 untuk membatasi kedalaman pohon, serta random_state=42 untuk memastikan konsistensi.
+  ![image](https://github.com/user-attachments/assets/db169969-f242-435e-a478-bd7af08607fd)
 
-Parameter Utama:
-- max_depth=5: Membatasi kedalaman pohon agar tidak terlalu rumit, yang membantu mengurangi risiko overfitting.
-- random_state=42
-  
+**2. ARIMA**
+Tahapan Pemodelan:
+- Data diurutkan berdasarkan tanggal, dan kolom Date di-set sebagai index time series.
+- Data di-split secara kronologis (misalnya 80% training, 20% testing) agar urutan waktu tetap terjaga.
+- Penentuan Order (p, d, q): Menggunakan analisis ACF/PACF untuk menentukan nilai p (autoregressive order) dan q (moving average order). d adalah jumlah differencing yang diperlukan untuk membuat data stasioner.
+
+- Fitting Model: Model ARIMA dengan order tertentu (misalnya, ARIMA(1,1,1)) di-fit pada data training.
+
+- Parameter Utama:
+
+p: Jumlah lag pada komponen autoregressive.
+d: Jumlah kali differencing yang dilakukan untuk stasioneritas.
+q: Jumlah lag pada komponen moving average.
+Contoh: ARIMA(1,1,1)
+
 Kelebihan:
-- ✅ Mudah dipahami dan diinterpretasikan – Bisa divisualisasikan dalam bentuk pohon keputusan.
-- ✅ Dapat menangani data non-linear – Tidak seperti Logistic Regression, Decision Tree dapat menemukan pola kompleks dalam dataset.
-- ✅ Tidak memerlukan banyak preprocessing – Tidak perlu normalisasi atau transformasi skala data.
-- ✅ Dapat menangani data dengan missing values – Tidak terlalu bergantung pada keberadaan semua fitur dalam setiap sample.
+- Cocok untuk data time series univariat yang pola tren dan musiman sudah jelas.
+- Model sederhana dan mudah diinterpretasikan.
+- Banyak referensi dan metode tuning yang telah bagik.
 
 Kekurangan:
-- ❌ Cenderung overfitting – Jika tidak di-pruning, model bisa terlalu menyesuaikan dengan data pelatihan.
-- ❌ Kurang stabil – Perubahan kecil pada data dapat menyebabkan perubahan besar dalam struktur pohon.
-- ❌ Kurang efisien pada dataset besar – Waktu komputasi meningkat seiring bertambahnya ukuran dataset dan jumlah fitur.
+- Hanya memodelkan satu variabel (univariat), sehingga tidak dapat - memanfaatkan fitur eksternal atau rekayasa fitur seperti lag dan moving average secara eksplisit.
+- Sensitif terhadap penentuan parameter order dan memerlukan data yang stasioner.
+- Tidak mampu menangkap hubungan non-linear secara kompleks.
+![image](https://github.com/user-attachments/assets/922284cc-a598-4498-a4de-cb1b05616a7a)
+
+**3. LSTM (Long Short-Term Memory)**
+Tahapan Pemodelan:
+- Data diubah ke bentuk 3D (samples, time_steps, features) sesuai dengan kebutuhan input LSTM. 
+- Membangun Model: Model LSTM dibangun menggunakan Sequential API, dengan satu layer LSTM dan satu layer Dense sebagai output.
+- Kompilasi Model:
+Model dikompilasi menggunakan optimizer Adam dan loss function MSE (Mean Squared Error) karena target adalah nilai kontinu.
+- Training Model:
+Model dilatih selama sejumlah epoch (50 epoch) dengan batch size (32) dan divalidasi pada data testing.
+- Prediksi dan Evaluasi:
+Model menghasilkan prediksi revenue pada data testing yang kemudian dievaluasi dengan metrik seperti MAE dan RMSE.
+
+- Parameter Utama:
+Jumlah Unit LSTM: 50 unit yang menentukan kompleksitas representasi temporal.
+Activation Function:ReLU, untuk menangkap non-linearity.
+Epochs: Jumlah iterasi training (50).
+Batch Size: Jumlah sampel yang diproses sebelum melakukan update parameter (32).
+Learning Rate: Parameter dalam optimizer Adam (misalnya, 0.001).
+
+Kelebihan:
+- Sangat efektif untuk data time series dengan ketergantungan jangka panjang.
+- Mampu menangkap hubungan non-linear dan pola kompleks dalam data.
+- Cocok untuk dataset yang besar dan dinamis.
+
+Kekurangan:
+- Memerlukan data dalam jumlah besar dan waktu training yang lebih lama dibandingkan model tradisional.
+- Memerlukan tuning hyperparameter yang lebih cermat.
+- Interpretasi model deep learning seperti LSTM lebih sulit dibandingkan model tradisional.
+  ![image](https://github.com/user-attachments/assets/d09c07b8-4db0-4036-b310-4f6b9da0140f)
 
 # F. Model Evaluation 
 
-model.predict(X):
-Deskripsi:
-Metode ini digunakan untuk menghasilkan prediksi dari model yang telah dilatih berdasarkan input data X.
-Fungsi:
-Menghasilkan array prediksi (label) untuk setiap sampel di X, sehingga kita dapat membandingkan hasil prediksi dengan label asli.
+Setelah mengembangkan model dengan tiga pendekatan (ARIMA, RandomForestRegressor, dan LSTM. Diperoleh hasilnya:
 
-accuracy_score(y_true, y_pred):
-Deskripsi:
-Fungsi ini berasal dari modul sklearn.metrics dan digunakan untuk menghitung akurasi, yaitu rasio jumlah prediksi yang benar dibandingkan dengan jumlah total sampel.
-Fungsi:
-Menyediakan metrik evaluasi sederhana yang mengukur berapa persen prediksi model sesuai dengan label sebenarnya.
+**- RandomForestRegressor:**
+Testing MAE: 0.7630
+Testing RMSE: 1.0317
+Model ini memberikan error yang relatif rendah pada data testing, menunjukkan prediksi revenue harian yang lebih dekat dengan nilai aktual. Karena Random Forest menggunakan feature engineering (lag, moving average) untuk menangkap pola non-linear dalam data time series, hasilnya mendukung Goal 1 (forecasting revenue harian dengan error rendah).
 
-![image](https://github.com/user-attachments/assets/4b251182-40b2-47bc-8bd7-44fe00ec53b2)
+**- ARIMA:**
+MAE: 1.3104
+RMSE: 1.6240
+Meskipun merupakan pendekatan time series klasik, error ARIMA lebih tinggi, sehingga model ini kurang optimal dibanding Random Forest dalam konteks dataset ini.
+Hasil ARIMA menunjukkan bahwa pendekatan univariat tidak cukup menangkap pola kompleks pada data, sehingga Goal 1 belum tercapai dengan optimal jika hanya menggunakan ARIMA.
 
-RandomForestClassifier dan DecisionTreeClassifier menunjukkan performa sempurna (100% akurasi) pada kedua data training dan testing, sedangkan LogisticRegression memiliki akurasi yang sedikit lebih rendah (98.52%).
+**- LSTM :**
+MAE: 0.9514
+RMSE: 1.2049
+: Model LSTM, yang merupakan pendekatan deep learning untuk time series, menunjukkan performa yang cukup baik, tetapi error-nya masih sedikit lebih tinggi dibanding Random Forest. Hasil LSTM mendukung Goal 1, karena LSTM dapat menangkap dependensi jangka panjang. Namun, bila dibandingkan dengan Random Forest, performa LSTM belum mencapai tingkat akurasi tertinggi.
 
-Keunggulan Tree-Based Models:
-- Random Forest dan Decision Tree mampu menangkap hubungan non-linear dan interaksi fitur secara lebih baik.
-- Random Forest, sebagai ensembel dari banyak pohon, biasanya lebih stabil dan kurang rentan overfitting dibandingkan satu pohon Decision Tree.
+![image](https://github.com/user-attachments/assets/178df41c-bdcb-47ec-9b05-38a23ae4525a)
 
-Pemilihan Model Terbaik:
-Berdasarkan metrik evaluasi, RandomForestClassifier dipilih sebagai model terbaik karena performanya yang 100% dan kemampuannya yang lebih robust untuk generalisasi.
+**Kesimpulan**
+Dalam konteks forecasting revenue harian, model Random Forest Regressor menunjukkan performa terbaik berdasarkan metrik MAE dan RMSE. LSTM memberikan hasil yang cukup baik dan merupakan alternatif yang menarik, terutama jika data memiliki pola dependensi jangka panjang yang kompleks. Namun, jika tujuan utama adalah akurasi prediksi dan generalisasi, Random Forest lebih direkomendasikan.
