@@ -120,10 +120,11 @@ Tahapan Pemodelan:
 - Splitting Data: Data di-split secara kronologis ke dalam training dan testing set.
 - Training Model: Model Random Forest Regressor di-fit pada data training dengan fitur-fitur yang sudah di-scale.
 - Prediksi dan Evaluasi: Model digunakan untuk memprediksi revenue pada data training dan testing, kemudian dievaluasi menggunakan metrik seperti MAE, RMSE, dan R².
-- Parameter Utama:
-n_estimators: Jumlah pohon dalam ensemble (misalnya, 100).
-max_depth: Kedalaman maksimum masing-masing pohon (misalnya, 10) untuk mengurangi kompleksitas dan overfitting.
-random_state: Untuk memastikan reproducibility hasil.
+  
+Parameter Utama:
+- n_estimators: Jumlah pohon dalam ensemble (100).
+- max_depth: Kedalaman maksimum masing-masing pohon (10) untuk mengurangi kompleksitas dan overfitting.
+- random_state: Untuk memastikan reproducibility hasil.
 
 Kelebihan:
 - Mampu menangkap hubungan non-linear dan interaksi antar fitur dengan sangat baik.
@@ -146,11 +147,10 @@ Tahapan Pemodelan:
 
 - Fitting Model: Model ARIMA dengan order tertentu (misalnya, ARIMA(1,1,1)) di-fit pada data training.
 
-- Parameter Utama:
-
-p: Jumlah lag pada komponen autoregressive.
-d: Jumlah kali differencing yang dilakukan untuk stasioneritas.
-q: Jumlah lag pada komponen moving average.
+Parameter Utama:
+- p: Jumlah lag pada komponen autoregressive.
+- d: Jumlah kali differencing yang dilakukan untuk stasioneritas.
+- q: Jumlah lag pada komponen moving average.
 Contoh: ARIMA(1,1,1)
 
 Kelebihan:
@@ -175,12 +175,12 @@ Model dilatih selama sejumlah epoch (50 epoch) dengan batch size (32) dan divali
 - Prediksi dan Evaluasi:
 Model menghasilkan prediksi revenue pada data testing yang kemudian dievaluasi dengan metrik seperti MAE dan RMSE.
 
-- Parameter Utama:
-Jumlah Unit LSTM: 50 unit yang menentukan kompleksitas representasi temporal.
-Activation Function:ReLU, untuk menangkap non-linearity.
-Epochs: Jumlah iterasi training (50).
-Batch Size: Jumlah sampel yang diproses sebelum melakukan update parameter (32).
-Learning Rate: Parameter dalam optimizer Adam (misalnya, 0.001).
+Parameter Utama:
+- Jumlah Unit LSTM: 50 unit yang menentukan kompleksitas representasi temporal.
+- Activation Function:ReLU, untuk menangkap non-linearity.
+- Epochs: Jumlah iterasi training (50).
+- Batch Size: Jumlah sampel yang diproses sebelum melakukan update parameter (32).
+- Learning Rate: Parameter dalam optimizer Adam (misalnya, 0.001).
 
 Kelebihan:
 - Sangat efektif untuk data time series dengan ketergantungan jangka panjang.
@@ -198,20 +198,20 @@ Kekurangan:
 Setelah mengembangkan model dengan tiga pendekatan (ARIMA, RandomForestRegressor, dan LSTM. Diperoleh hasilnya:
 
 **- RandomForestRegressor:**
-Testing MAE: 0.7630
-Testing RMSE: 1.0317
+- Testing MAE: 0.7630
+- Testing RMSE: 1.0317
 Model ini memberikan error yang relatif rendah pada data testing, menunjukkan prediksi revenue harian yang lebih dekat dengan nilai aktual. Karena Random Forest menggunakan feature engineering (lag, moving average) untuk menangkap pola non-linear dalam data time series, hasilnya mendukung Goal 1 (forecasting revenue harian dengan error rendah).
 
 **- ARIMA:**
-MAE: 1.3104
-RMSE: 1.6240
+- MAE: 1.3104
+- RMSE: 1.6240
 Meskipun merupakan pendekatan time series klasik, error ARIMA lebih tinggi, sehingga model ini kurang optimal dibanding Random Forest dalam konteks dataset ini.
 Hasil ARIMA menunjukkan bahwa pendekatan univariat tidak cukup menangkap pola kompleks pada data, sehingga Goal 1 belum tercapai dengan optimal jika hanya menggunakan ARIMA.
 
 **- LSTM :**
-MAE: 0.9514
-RMSE: 1.2049
-: Model LSTM, yang merupakan pendekatan deep learning untuk time series, menunjukkan performa yang cukup baik, tetapi error-nya masih sedikit lebih tinggi dibanding Random Forest. Hasil LSTM mendukung Goal 1, karena LSTM dapat menangkap dependensi jangka panjang. Namun, bila dibandingkan dengan Random Forest, performa LSTM belum mencapai tingkat akurasi tertinggi.
+- MAE: 0.9514
+- RMSE: 1.2049
+Model LSTM, yang merupakan pendekatan deep learning untuk time series, menunjukkan performa yang cukup baik, tetapi error-nya masih sedikit lebih tinggi dibanding Random Forest. Hasil LSTM mendukung Goal 1, karena LSTM dapat menangkap dependensi jangka panjang. Namun, bila dibandingkan dengan Random Forest, performa LSTM belum mencapai tingkat akurasi tertinggi.
 
 ![image](https://github.com/user-attachments/assets/178df41c-bdcb-47ec-9b05-38a23ae4525a)
 
