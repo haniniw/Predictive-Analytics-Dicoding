@@ -95,6 +95,25 @@ Quantity memiliki pengaruh dominan terhadap Revenue (korelasi tinggi, 0.98), sem
 Price dan Quantity juga berkorelasi negatif lemah (
 − 0.21 0.21), artinya ketika Price naik, Quantity mungkin sedikit turun, tetapi tidak terlalu signifikan.
 
+![image](https://github.com/user-attachments/assets/60d6a194-5a6b-49e2-b14c-57b99bd626f6)
+
+Hubungan Price vs. Revenue:
+Tidak tampak pola linear yang kuat; banyak titik tersebar secara acak. Korelasi −0.075 menandakan hampir tidak ada hubungan linear. Artinya, harga barang tidak secara langsung menentukan seberapa besar revenue yang dihasilkan.
+
+Hubungan Quantity vs. Revenue:
+Terlihat garis diagonal yang cukup jelas, mengindikasikan hubungan positif kuat (korelasi ≈0.98). Semakin tinggi Quantity, semakin besar Revenue yang dihasilkan. 
+
+Hubungan Price vs. Quantity:
+- Sebaran titik tidak membentuk pola linear yang jelas. Ada kecenderungan bahwa barang dengan Price tinggi kadang dibeli dalam Quantity yang lebih rendah, namun hubungannya tidak terlalu kuat. Hal ini sejalan dengan korelasi negatif lemah (−0.21).
+
+Kesimpulan:
+
+Quantity menjadi faktor penentu utama Revenue (karena korelasi sangat tinggi).
+
+Price hanya memiliki hubungan linear yang sangat lemah dengan Revenue dan cenderung memengaruhi Quantity secara negatif lemah (barang mahal dibeli dalam jumlah sedikit, namun tidak terlalu signifikan).
+
+Revenue bervariasi terutama dipengaruhi oleh seberapa banyak barang yang dibeli (Quantity)
+
 # D. Data Preparation
 
 **1. Membuat Label Pembatalan dan Revenue**
