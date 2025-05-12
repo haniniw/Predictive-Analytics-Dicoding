@@ -1,63 +1,63 @@
 # Predictive-Analytics-Dicoding
-Oleh: Noer Hanifah Suganda
+By: Noer Hanifah Suganda
 
-# A. Latar Belakang
+# A. Background
 
-Perusahaan e-commerce UK yang berbasis di London telah beroperasi sejak tahun 2007 dan menawarkan produk berupa hadiah serta homewares untuk berbagai kalangan, baik individu maupun bisnis kecil. Dataset yang digunakan dalam analisis ini mencakup 500 ribu transaksi selama satu tahun dengan 8 kolom informasi.
+A UK-based e-commerce company headquartered in London has been operating since 2007, offering products such as gifts and homewares for various customer segments, including individuals and small businesses. The dataset used in this analysis includes 500,000 transactions over one year, with 8 columns of information.
 
-Meskipun sebagian besar transaksi berjalan lancar, terdapat persentase kecil transaksi yang dibatalkan. Pembatalan ini umumnya terjadi karena kondisi stok yang tidak memadai, sehingga pelanggan memilih untuk membatalkan transaksi agar dapat menerima semua produk sekaligus. Pembatalan transaksi tidak hanya mengganggu alur operasional, tetapi juga berdampak pada pendapatan dan kepuasan pelanggan.
+Although most transactions proceed smoothly, there is a small percentage of transactions that are canceled. These cancellations typically occur due to insufficient stock, causing customers to cancel the transaction in order to receive all products at once. Transaction cancellations not only disrupt operational flow but also impact revenue and customer satisfaction.
 
-Melihat kondisi tersebut, penting untuk mengidentifikasi faktor-faktor yang mempengaruhi pembatalan transaksi dan mengembangkan model prediksi yang mampu mendeteksi transaksi berisiko pembatalan. Dengan menerapkan pendekatan machine learning, perusahaan dapat mengambil langkah proaktif untuk mengoptimalkan manajemen inventori, mengurangi kerugian finansial, serta meningkatkan pengalaman pelanggan secara keseluruhan.
+Given this situation, it is crucial to identify the factors influencing transaction cancellations and to develop a predictive model that can detect transactions at risk of being canceled. By applying machine learning approaches, the company can take proactive steps to optimize inventory management, reduce financial losses, and enhance the overall customer experience.
 
 # B. Business Understanding
 
-Dalam dunia e-commerce, menjaga pendapatan harian itu sangat penting. Pendapatan harian yang fluktuatif dapat membuat perusahaan kesulitan dalam mengelola stok, mengatur promosi, dan merencanakan operasional. Jika perusahaan dapat mengetahui kapan pendapatan cenderung turun atau naik, mereka bisa lebih cepat merespons—misalnya, dengan menambah stok atau menyesuaikan promosi—sehingga kerugian dapat diminimalkan dan kesempatan penjualan dapat dimaksimalkan.
+In the world of e-commerce, maintaining daily revenue is crucial. Fluctuating daily revenue can make it difficult for companies to manage inventory, plan promotions, and organize operations. If a company can predict when revenue is likely to drop or rise, they can respond more quickly—such as by increasing stock or adjusting promotions—thereby minimizing losses and maximizing sales opportunities.
 
 **Problem Statement:**
 
-- Bagaimana membangun model prediktif berbasis time series untuk meramalkan total pendapatan harian (daily revenue) dari transaksi e-commerce?
-- Model yang seperti apa yang memiliki akurasi paling baik?
+- How to build a predictive model based on time series to forecast daily revenue from e-commerce transactions?
+- What type of model has the best accuracy?
 
 **Goals:**
 
-- Mengembangkan model forecasting yang dapat memprediksi pendapatan penjualan harian dengan akurasi yang terukur menggunakan metrik Mean Absolute Error (MAE) dan Root Mean Squared Error (RMSE).
-- Membandingkan beberapa algoritma model untuk menemukan akurasi terbaik dalam memprediksi pendapatan penjualan harian.
+- Developing a forecasting model that can predict daily sales revenue with measurable accuracy using the Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) metrics.
+- Comparing several model algorithms to find the best accuracy in predicting daily sales revenue.
 
 **Solution Statement**
 
-Untuk meramalkan total pendapatan harian (daily revenue) dari transaksi e-commerce, saya menggunakan tiga pendekatan solusi, masing-masing dengan metrik evaluasi terukur (seperti MAE dan RMSE) sehingga solusi yang dihasilkan dapat dinilai secara objektif.
+To forecast daily revenue from e-commerce transactions, I use three solution approaches, each with measurable evaluation metrics (such as MAE and RMSE) so that the resulting solutions can be assessed objectively.
 
-- Menggunakan model ARIMA untuk memodelkan data time series secara univariat. ARIMA memanfaatkan pola historis revenue untuk menangkap tren dan musiman secara langsung melalui parameter (p, d, q). ARIMA memberikan model time series klasik yang mengandalkan pola historis secara langsung.
+- Using the ARIMA model to model univariate time series data. ARIMA utilizes historical revenue patterns to directly capture trends and seasonality through its parameters (p, d, q). ARIMA provides a classic time series model that directly relies on historical patterns.
 
-- Menggunakan Random Forest Regressor untuk forecasting revenue harian dengan memanfaatkan fitur-fitur hasil rekayasa (lag revenue, moving averages, dll.). Pendekatan ini memungkinkan model menangkap hubungan non-linear dan interaksi antar fitur yang mungkin tidak dapat ditangkap oleh model time series tradisional.
+- Using Random Forest Regressor for daily revenue forecasting by utilizing engineered features (such as lag revenue, moving averages, etc.). This approach allows the model to capture non-linear relationships and interactions between features that traditional time series models may not be able to capture.
 
-- Mengembangkan model deep learning berbasis LSTM yang dirancang untuk menangkap ketergantungan jangka panjang dalam data time series. Pendekatan ini efektif jika pola revenue harian memiliki dinamika non-linear yang kompleks.
+- Developing a deep learning model based on LSTM, designed to capture long-term dependencies in time series data. This approach is effective when daily revenue patterns have complex non-linear dynamics.
 
 # C. Data Understanding
 
-Sumber: https://www.kaggle.com/datasets/gabrielramos87/an-online-shop-business
+Source: https://www.kaggle.com/datasets/gabrielramos87/an-online-shop-business
 
-Dataset ini memiliki lebih dari 500.000 baris data dan 8 kolom. Berikut adalah deskripsi masing-masing kolom:
+This dataset contains more than 500,000 rows of data and 8 columns. Below is the description of each column:
 
-1. TransactionNo (kategorikal): Merupakan nomor unik enam digit yang mendefinisikan setiap transaksi. Jika terdapat huruf "C" pada kode, artinya transaksi tersebut merupakan pembatalan
-2. Date (numerik): Menunjukkan tanggal saat transaksi terjadi.
-3. ProductNo (kategorikal): Karakter unik yang terdiri dari lima atau enam digit, digunakan untuk mengidentifikasi produk tertentu.
-4. Product (kategorikal): Nama produk atau barang yang dijual.
-5. Price (numerik): Harga per unit dari masing-masing produk, dihitung dalam pound sterling (£).
-6. Quantity (numerik): Jumlah produk yang dibeli dalam setiap transaksi. Nilai negatif menunjukkan transaksi yang dibatalkan.
-7. CustomerNo (kategorikal): Nomor unik yang terdiri dari lima digit untuk mengidentifikasi setiap pelanggan.
-8. Country (kategorikal): Nama negara di mana pelanggan tersebut berada.
+1. TransactionNo (categorical): A unique six-digit number that defines each transaction. If the code contains the letter "C," it indicates that the transaction is a cancellation.
+2. Date (numeric): Indicates the date when the transaction occurred.
+3. ProductNo (categorical): A unique character string consisting of five or six digits, used to identify a specific product.
+4. Product (categorical): The name of the product or item being sold.
+5. Price (numeric): The price per unit of each product, expressed in British pounds (£).
+6. Quantity (numeric): The quantity of products purchased in each transaction. Negative values indicate canceled transactions.
+7. CustomerNo (categorical): A unique five-digit number used to identify each customer.
+8. Country (categorical): The name of the country where the customer is located.
 
-**Kondisi Data**
-- Duplikasi: Terdapat 5200 baris duplikat yang dihapus.
-- Missing Values: 55 baris null pada kolom CustomerNo dihapus.
-- Tipe Data: Kolom Date awalnya berupa string dan CustomerNo berupa float; kedua kolom ini dikonversi ke tipe yang sesuai.
-- Outliers: Outlier di Price dan Quantity diidentifikasi dengan metode IQR dan dihapus menggunakan kombinasi mask.
+**Data Conditions**
+- Duplicates: There are 5,200 duplicate rows which were removed.
+- Missing Values: 55 null rows in the CustomerNo column were deleted.
+- Data Types: The Date column was originally a string, and CustomerNo was a float; both columns were converted to their appropriate data types.
+- Outliers: Outliers in Price and Quantity were identified using the IQR method and removed using a mask combination.
 
 **Exploratory Data Analysis (EDA)**
 
-Visualisasi & Analisis Univariate:
-- Numerik: Histogram dan boxplot untuk fitur Price dan Quantity (serta Date yang dikonversi ke bentuk numerik) digunakan untuk melihat sebaran data dan mendeteksi outlier.
+Visualization & Univariate Analysis:
+- Numeric: Histograms and boxplots for the Price and Quantity features (as well as Date converted to numeric form) were used to visualize the data distribution and detect outliers.
   
 ![image](https://github.com/user-attachments/assets/7219bd8b-38ac-44c6-8421-fce05330cee6)
 ![image](https://github.com/user-attachments/assets/d5782c87-346a-47ea-a9cf-11b13129caaa)
@@ -66,182 +66,212 @@ Visualisasi & Analisis Univariate:
 ![image](https://github.com/user-attachments/assets/b4e8f759-1a0e-4b3c-83ac-4e702f348d11)
 ![image](https://github.com/user-attachments/assets/d2109128-7a95-4434-9c31-b8a872d697b9)
 
-- Kategorikal: Analisis frekuensi (value_counts) untuk fitur seperti ProductName, CustomerNo, TransactionNo, dan Country.
+- Categorical: Frequency analysis (using value_counts) was performed on features such as ProductName, CustomerNo, TransactionNo, and Country.
 
 ![image](https://github.com/user-attachments/assets/392826e9-2c4d-4efa-8797-c6c4c126c4dd)
 ![image](https://github.com/user-attachments/assets/c28240ad-50e2-4584-b93f-77880586725c)
 ![image](https://github.com/user-attachments/assets/c5e259ee-8123-44c8-8156-b2f124943992)
 
-Analisis Target Variable:
-Variabel target dibuat, yaitu IsCancelled, yang ditentukan berdasarkan apakah TransactionNo mengandung huruf "C" atau Quantity negatif. Visualisasi distribusi target (countplot) menunjukkan perbandingan transaksi dibatalkan vs. tidak dibatalkan.
+Target Variable Analysis:
+A target variable, IsCancelled, was created, determined based on whether the TransactionNo contains the letter "C" or if the Quantity is negative. The visualization of the target distribution (using a countplot) shows the comparison between canceled and non-canceled transactions.
 
 ![image](https://github.com/user-attachments/assets/70bb9da8-022c-4f26-add8-d950db4168d0)
 
-Analisis Multivariate:
-- Heatmap korelasi antara Price dan Quantity menunjukkan hubungan linear yang lemah.
+Multivariate Analysis:
+- Correlation Heatmap: The heatmap showing the correlation between Price and Quantity indicates a weak linear relationship.
 
 ![image](https://github.com/user-attachments/assets/2a424b36-7720-44ff-aab0-a67a404fa8b4)
 
-- Pairplot mengilustrasikan bahwa sebagian besar transaksi normal memiliki Quantity positif, sementara transaksi yang dibatalkan ditandai dengan Quantity negatif.
+- Pairplot: The pairplot illustrates that most normal transactions have a positive Quantity, while canceled transactions are marked by a negative Quantity.
 
 ![image](https://github.com/user-attachments/assets/a187e8ac-e682-48da-bdf7-d2cc461f9578)
 
-- Heatmap Korelasi antar Fitur Numerik
+- Correlation Heatmap between Numeric Features
 
 ![image](https://github.com/user-attachments/assets/7792b19b-4b06-4a2b-b8e3-17d57c995e70)
 
-Quantity memiliki pengaruh dominan terhadap Revenue (korelasi tinggi, 0.98), sementara Price hanya memiliki hubungan linear yang sangat lemah terhadap Revenue (−0.075).
+Quantity has a dominant influence on Revenue (with a high correlation of 0.98), while Price only has a very weak linear relationship with Revenue (-0.075).
 
-Price dan Quantity juga berkorelasi negatif lemah (
-− 0.21 0.21), artinya ketika Price naik, Quantity mungkin sedikit turun, tetapi tidak terlalu signifikan.
+Price and Quantity are also weakly negatively correlated (-0.21), meaning that when Price increases, Quantity might slightly decrease, but the change is not significant.
+
 
 ![image](https://github.com/user-attachments/assets/60d6a194-5a6b-49e2-b14c-57b99bd626f6)
 
-Hubungan Price vs. Revenue:
-Tidak tampak pola linear yang kuat; banyak titik tersebar secara acak. Korelasi −0.075 menandakan hampir tidak ada hubungan linear. Artinya, harga barang tidak secara langsung menentukan seberapa besar revenue yang dihasilkan.
+Price vs. Revenue Relationship:
+No strong linear pattern is observed; many points are scattered randomly. A correlation of -0.075 indicates almost no linear relationship. This means that the price of the items does not directly determine the amount of revenue generated.
 
-Hubungan Quantity vs. Revenue:
-Terlihat garis diagonal yang cukup jelas, mengindikasikan hubungan positif kuat (korelasi ≈0.98). Semakin tinggi Quantity, semakin besar Revenue yang dihasilkan. 
+Quantity vs. Revenue Relationship:
+A clear diagonal line is visible, indicating a strong positive relationship (correlation ≈ 0.98). The higher the Quantity, the higher the Revenue generated.
 
-Hubungan Price vs. Quantity:
-- Sebaran titik tidak membentuk pola linear yang jelas. Ada kecenderungan bahwa barang dengan Price tinggi kadang dibeli dalam Quantity yang lebih rendah, namun hubungannya tidak terlalu kuat. Hal ini sejalan dengan korelasi negatif lemah (−0.21).
+Price vs. Quantity Relationship:
+The spread of points does not form a clear linear pattern. There is a tendency that items with higher Price are sometimes purchased in lower Quantity, but the relationship is not very strong. This aligns with the weak negative correlation (-0.21).
 
-Kesimpulan:
+Conclusion:
+- Quantity is the key determinant of Revenue (due to the very high correlation).
+- Price has only a very weak linear relationship with Revenue and tends to negatively affect Quantity (more expensive items are bought in smaller quantities, but not significantly).
+- Revenue primarily varies based on how much of the product is purchased (Quantity).
 
-Quantity menjadi faktor penentu utama Revenue (karena korelasi sangat tinggi).
-
-Price hanya memiliki hubungan linear yang sangat lemah dengan Revenue dan cenderung memengaruhi Quantity secara negatif lemah (barang mahal dibeli dalam jumlah sedikit, namun tidak terlalu signifikan).
-
-Revenue bervariasi terutama dipengaruhi oleh seberapa banyak barang yang dibeli (Quantity)
 
 # D. Data Preparation
 
-**1. Membuat Label Pembatalan dan Revenue**
-Dibuat kolom IsCancelled untuk menandai apakah transaksi dibatalkan (jika TransactionNo mengandung 'C' atau jika Quantity < 0).
+Here’s the translation with the symbols preserved:
 
-Kolom Revenue dihitung sebagai hasil perkalian Price dan Quantity untuk transaksi yang tidak dibatalkan, sedangkan untuk transaksi yang dibatalkan revenue diset menjadi 0..
+---
 
-**2. Mengambil Hanya Transaksi yang Berhasil (non-cancelled)**
-Untuk forecasting revenue, kita hanya akumulasi transaksi yang tidak dibatalkan. Disimpan dalam df_sucess
+**1. Creating Cancellation and Revenue Labels**
+A column **IsCancelled** was created to mark whether the transaction was canceled (if **TransactionNo** contains 'C' or if **Quantity** < 0).
 
-**3. Agregasi Revenue Harian**
-Data kemudian dikelompokkan berdasarkan tanggal untuk mendapatkan total pendapatan harian.
+The **Revenue** column is calculated as the product of **Price** and **Quantity** for non-canceled transactions, while for canceled transactions, **Revenue** is set to 0.
 
-**4. Pembuatan Fitur Time Series**
-Dibuat fitur lag (misalnya, Lag1, Lag7, Lag30) yang menunjukkan pendapatan hari sebelumnya sebagai input untuk model.
+**2. Selecting Only Successful (Non-Cancelled) Transactions**
+For forecasting revenue, we only accumulate non-canceled transactions. This is stored in **df\_success**.
 
-Dibuat juga fitur moving average (MA7, MA30) untuk menangkap pola tren jangka pendek dan panjang.
+**3. Aggregating Daily Revenue**
+The data is then grouped by date to get the total daily revenue.
 
-**5. Scaling Fitur Numerik**
-Fitur-fitur numerik seperti Revenue, lag, dan moving average di-scale menggunakan StandardScaler agar memiliki rentang nilai yang seragam dan memudahkan proses training model.
+**4. Creating Time Series Features**
+Lag features (e.g., **Lag1**, **Lag7**, **Lag30**) were created to represent the revenue of the previous day as input for the model.
 
-**6. Split Data Menjadi Training dan Testing Set**
-Data time series dibagi secara kronologis (tanpa pengacakan) ke dalam data training dan testing (misalnya, 80% training dan 20% testing) untuk menjaga urutan waktu.
+Moving average features (e.g., **MA7**, **MA30**) were also created to capture short-term and long-term trend patterns.
+
+**5. Scaling Numeric Features**
+Numeric features such as **Revenue**, **lag**, and **moving average** were scaled using **StandardScaler** to ensure uniform value ranges, making it easier for model training.
+
+**6. Splitting Data into Training and Testing Sets**
+The time series data was split chronologically (without shuffling) into training and testing sets (e.g., 80% training and 20% testing) to preserve the time order.
 
 # E. Model Development 
 
-Tiga algoritma digunakan:
+Three algorithms used:
 
-**1. Random Forest Regressor**
-Tahapan Pemodelan:
-- Fitur tambahan seperti lag dan moving average telah dibuat untuk menangkap pola temporal.
-- Splitting Data: Data di-split secara kronologis ke dalam training dan testing set.
-- Training Model: Model Random Forest Regressor di-fit pada data training dengan fitur-fitur yang sudah di-scale.
-- Prediksi dan Evaluasi: Model digunakan untuk memprediksi revenue pada data training dan testing, kemudian dievaluasi menggunakan metrik seperti MAE, RMSE, dan R².
-  
-Parameter Utama:
-- n_estimators: Jumlah pohon dalam ensemble (100).
-- max_depth: Kedalaman maksimum masing-masing pohon (10) untuk mengurangi kompleksitas dan overfitting.
-- random_state: Untuk memastikan reproducibility hasil.
+### **1. Random Forest Regressor**
 
-Kelebihan:
-- Mampu menangkap hubungan non-linear dan interaksi antar fitur dengan sangat baik.
-- Lebih robust terhadap noise dan overfitting karena menggunakan banyak pohon (ensembling).
-- Dapat memanfaatkan fitur rekayasa seperti lag dan moving average sehingga memperkaya informasi.
+#### **Modeling Steps**:
 
-Kekurangan:
-- Memerlukan sumber daya komputasi lebih banyak, sehingga training bisa lebih lambat.
-- Interpretasi internal model kurang transparan karena merupakan ensemble dari banyak pohon.
-- Jika parameter tidak di-tuning dengan baik, bisa tetap overfit pada data training.
+* Additional features such as lag and moving average have been created to capture temporal patterns.
+* **Data Splitting**: The data is split chronologically into training and testing sets.
+* **Model Training**: The **Random Forest Regressor** model is trained on the training data with scaled features.
+* **Prediction and Evaluation**: The model is used to predict revenue on both the training and testing data, then evaluated using metrics such as **MAE**, **RMSE**, and **R²**.
+
+#### **Key Parameters**:
+
+* **n\_estimators**: The number of trees in the ensemble (100).
+* **max\_depth**: The maximum depth of each tree (10) to reduce complexity and prevent overfitting.
+* **random\_state**: Ensures reproducibility of results.
+
+#### **Advantages**:
+
+* Capable of capturing non-linear relationships and interactions between features very effectively.
+* More robust against noise and overfitting due to the use of multiple trees (ensemble learning).
+* Can leverage engineered features like lag and moving averages, enriching the model’s information.
+
+#### **Disadvantages**:
+
+* Requires more computational resources, making training slower.
+* The internal interpretation of the model is less transparent because it is an ensemble of many trees.
+* If parameters are not well-tuned, the model may still overfit the training data.
+
   ![image](https://github.com/user-attachments/assets/16fa79c8-511c-45b9-b3d2-e3527ccf8a59)
 
   ![image](https://github.com/user-attachments/assets/db169969-f242-435e-a478-bd7af08607fd)
 
 **2. ARIMA**
-Tahapan Pemodelan:
-- Data diurutkan berdasarkan tanggal, dan kolom Date di-set sebagai index time series.
-- Data di-split secara kronologis (misalnya 80% training, 20% testing) agar urutan waktu tetap terjaga.
-- Penentuan Order (p, d, q): Menggunakan analisis ACF/PACF untuk menentukan nilai p (autoregressive order) dan q (moving average order). d adalah jumlah differencing yang diperlukan untuk membuat data stasioner.
+Here’s the translation for the **ARIMA** modeling steps and details:
 
-- Fitting Model: Model ARIMA dengan order tertentu (misalnya, ARIMA(1,1,1)) di-fit pada data training.
+---
 
-Parameter Utama:
-- p: Jumlah lag pada komponen autoregressive.
-- d: Jumlah kali differencing yang dilakukan untuk stasioneritas.
-- q: Jumlah lag pada komponen moving average.
-Contoh: ARIMA(1,1,1)
+### **Modeling Steps**:
 
-Kelebihan:
-- Cocok untuk data time series univariat yang pola tren dan musiman sudah jelas.
-- Model sederhana dan mudah diinterpretasikan.
-- Banyak referensi dan metode tuning yang telah bagik.
+* The data is sorted by date, and the **Date** column is set as the time series index.
 
-Kekurangan:
-- Hanya memodelkan satu variabel (univariat), sehingga tidak dapat - memanfaatkan fitur eksternal atau rekayasa fitur seperti lag dan moving average secara eksplisit.
-- Sensitif terhadap penentuan parameter order dan memerlukan data yang stasioner.
-- Tidak mampu menangkap hubungan non-linear secara kompleks.
+* The data is split chronologically (e.g., 80% training, 20% testing) to maintain the time sequence.
+
+* **Determining Order (p, d, q)**: **ACF/PACF** analysis is used to determine the value of **p** (autoregressive order) and **q** (moving average order). **d** represents the number of differencing required to make the data stationary.
+
+* **Fitting the Model**: An **ARIMA** model with a specific order (e.g., ARIMA(1,1,1)) is fitted on the training data.
+
+#### **Key Parameters**:
+
+* **p**: The number of lags in the autoregressive component.
+* **d**: The number of times differencing is applied for stationarity.
+* **q**: The number of lags in the moving average component.
+  Example: ARIMA(1,1,1)
+
+#### **Advantages**:
+
+* Suitable for univariate time series data where trend and seasonality patterns are clear.
+* Simple model that is easy to interpret.
+* Many references and tuning methods are available.
+
+#### **Disadvantages**:
+
+* Only models one variable (univariate), so it cannot explicitly use external features or engineered features like lag and moving averages.
+* Sensitive to the determination of order parameters and requires stationary data.
+* Not capable of capturing complex non-linear relationships.
 ![image](https://github.com/user-attachments/assets/922284cc-a598-4498-a4de-cb1b05616a7a)
 
 **3. LSTM (Long Short-Term Memory)**
-Tahapan Pemodelan:
-- Data diubah ke bentuk 3D (samples, time_steps, features) sesuai dengan kebutuhan input LSTM. 
-- Membangun Model: Model LSTM dibangun menggunakan Sequential API, dengan satu layer LSTM dan satu layer Dense sebagai output.
-- Kompilasi Model:
-Model dikompilasi menggunakan optimizer Adam dan loss function MSE (Mean Squared Error) karena target adalah nilai kontinu.
-- Training Model:
-Model dilatih selama sejumlah epoch (50 epoch) dengan batch size (32) dan divalidasi pada data testing.
-- Prediksi dan Evaluasi:
-Model menghasilkan prediksi revenue pada data testing yang kemudian dievaluasi dengan metrik seperti MAE dan RMSE.
+Here’s the translation for the **LSTM model** steps and details:
 
-Parameter Utama:
-- Jumlah Unit LSTM: 50 unit yang menentukan kompleksitas representasi temporal.
-- Activation Function:ReLU, untuk menangkap non-linearity.
-- Epochs: Jumlah iterasi training (50).
-- Batch Size: Jumlah sampel yang diproses sebelum melakukan update parameter (32).
-- Learning Rate: Parameter dalam optimizer Adam (misalnya, 0.001).
+---
 
-Kelebihan:
-- Sangat efektif untuk data time series dengan ketergantungan jangka panjang.
-- Mampu menangkap hubungan non-linear dan pola kompleks dalam data.
-- Cocok untuk dataset yang besar dan dinamis.
+### **Modeling Steps**:
 
-Kekurangan:
-- Memerlukan data dalam jumlah besar dan waktu training yang lebih lama dibandingkan model tradisional.
-- Memerlukan tuning hyperparameter yang lebih cermat.
-- Interpretasi model deep learning seperti LSTM lebih sulit dibandingkan model tradisional.
+* The data is reshaped into 3D format (samples, time\_steps, features) as required for LSTM input.
+* **Building the Model**: The **LSTM model** is built using the Sequential API, with one LSTM layer and one Dense layer as the output layer.
+* **Model Compilation**:
+  The model is compiled using the Adam optimizer and the **MSE (Mean Squared Error)** loss function because the target is a continuous value.
+* **Model Training**:
+  The model is trained for a certain number of epochs (50 epochs) with a batch size of 32 and validated on the testing data.
+* **Prediction and Evaluation**:
+  The model generates revenue predictions on the testing data, which are then evaluated using metrics such as **MAE** and **RMSE**.
+
+#### **Key Parameters**:
+
+* **Number of LSTM Units**: 50 units, which determines the complexity of the temporal representation.
+* **Activation Function**: ReLU, to capture non-linearity.
+* **Epochs**: The number of training iterations (50).
+* **Batch Size**: The number of samples processed before updating the parameters (32).
+* **Learning Rate**: Parameter in the Adam optimizer (e.g., 0.001).
+
+#### **Advantages**:
+
+* Highly effective for time series data with long-term dependencies.
+* Capable of capturing non-linear relationships and complex patterns in the data.
+* Suitable for large and dynamic datasets.
+
+#### **Disadvantages**:
+
+* Requires a large amount of data and longer training time compared to traditional models.
+* Requires more careful hyperparameter tuning.
+* The interpretation of deep learning models like LSTM is more difficult compared to traditional models.
   ![image](https://github.com/user-attachments/assets/d09c07b8-4db0-4036-b310-4f6b9da0140f)
 
 # F. Model Evaluation 
 
-Setelah mengembangkan model dengan tiga pendekatan (ARIMA, RandomForestRegressor, dan LSTM. Diperoleh hasilnya:
+After developing the model with three approaches (ARIMA, RandomForestRegressor, and LSTM), the following results were obtained:
 
 **- RandomForestRegressor:**
-- Testing MAE: 0.7630
-- Testing RMSE: 1.0317
-Model ini memberikan error yang relatif rendah pada data testing, menunjukkan prediksi revenue harian yang lebih dekat dengan nilai aktual. Karena Random Forest menggunakan feature engineering (lag, moving average) untuk menangkap pola non-linear dalam data time series, hasilnya mendukung Goal 1 (forecasting revenue harian dengan error rendah).
+
+* **Testing MAE**: 0.7630
+* **Testing RMSE**: 1.0317
+
+This model provides relatively low error on the testing data, indicating that the daily revenue predictions are closer to the actual values. Since **Random Forest** utilizes feature engineering (lag, moving average) to capture non-linear patterns in the time series data, the results support **Goal 1** (forecasting daily revenue with low error).
 
 **- ARIMA:**
-- MAE: 1.3104
-- RMSE: 1.6240
-Meskipun merupakan pendekatan time series klasik, error ARIMA lebih tinggi, sehingga model ini kurang optimal dibanding Random Forest dalam konteks dataset ini.
-Hasil ARIMA menunjukkan bahwa pendekatan univariat tidak cukup menangkap pola kompleks pada data, sehingga Goal 1 belum tercapai dengan optimal jika hanya menggunakan ARIMA.
+* **MAE**: 1.3104
+* **RMSE**: 1.6240
+
+Although ARIMA is a classic time series approach, the error is higher, making this model less optimal compared to **Random Forest** for this dataset. The ARIMA results show that the univariate approach does not adequately capture the complex patterns in the data, meaning **Goal 1** is not optimally achieved when using ARIMA alone.
 
 **- LSTM :**
-- MAE: 0.9514
-- RMSE: 1.2049
-Model LSTM, yang merupakan pendekatan deep learning untuk time series, menunjukkan performa yang cukup baik, tetapi error-nya masih sedikit lebih tinggi dibanding Random Forest. Hasil LSTM mendukung Goal 1, karena LSTM dapat menangkap dependensi jangka panjang. Namun, bila dibandingkan dengan Random Forest, performa LSTM belum mencapai tingkat akurasi tertinggi.
+
+* **MAE**: 0.9514
+* **RMSE**: 1.2049
+
+The **LSTM model**, which is a deep learning approach for time series, shows fairly good performance, but its error is still slightly higher than that of **Random Forest**. The LSTM results support **Goal 1**, as LSTM can capture long-term dependencies. However, compared to **Random Forest**, the performance of LSTM has not yet reached the highest level of accuracy.
 
 ![image](https://github.com/user-attachments/assets/178df41c-bdcb-47ec-9b05-38a23ae4525a)
 
-**Kesimpulan**
-Dalam konteks forecasting revenue harian, model Random Forest Regressor menunjukkan performa terbaik berdasarkan metrik MAE dan RMSE. LSTM memberikan hasil yang cukup baik dan merupakan alternatif yang menarik, terutama jika data memiliki pola dependensi jangka panjang yang kompleks. Namun, jika tujuan utama adalah akurasi prediksi dan generalisasi, Random Forest lebih direkomendasikan.
+**Conclusion**
+In the context of forecasting daily revenue, the Random Forest Regressor model shows the best performance based on MAE and RMSE metrics. LSTM provides fairly good results and is an interesting alternative, especially if the data has complex long-term dependency patterns. However, if the primary goal is prediction accuracy and generalization, Random Forest is more recommended.
